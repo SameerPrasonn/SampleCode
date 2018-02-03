@@ -1,0 +1,51 @@
+<apex:page standardController="Account" extensions="ViewAllOpp" sidebar="false">
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+   <div>
+   </div>
+    <apex:form >
+       <apex:actionFunction action="{!deleteOp}" name="DeleteOpp" reRender="opLstPane">
+           <apex:param name="myParam" assignTo="{!IdValue}" value=""/>
+               </apex:actionFunction>
+            
+           <apex:pageBlock title="Account Details"  mode="details">
+               <apex:pageBlockSection title="Account Details" columns="2">
+               <apex:outputField label="Owner Name"  value="{!accObj.Owner.Name}"/>
+               <apex:outputText label="Billiing Address" value="{!billingAddress}"/>
+               <apex:outputField value="{!accObj.AccountNumber}"/>
+               <apex:outputField value="{!accObj.Phone}"/>
+               <apex:outputField value="{!accObj.Name}"/>
+               <apex:outputField value="{!accObj.AnnualRevenue}"/>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Related Opportunities" id="opLstPane" columns="1">
+                <apex:dataTable value="{!oppList}" var="op" id="theTable" style="width:100%">
+
+                    <apex:column >
+                        <apex:facet name="header">Action</apex:facet>
+                        <apex:outputPanel >
+                            <apex:outputLink value="/{!op.Id}" target="_black" id="theLink">View</apex:outputLink> | <apex:outputLink onclick="DeleteOpp('{!op.Id}'); return false;">Delete</apex:outputLink>
+                        </apex:outputPanel>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Opp Name</apex:facet>
+                        <apex:outputText value="{!op.Name}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Type</apex:facet>
+                        <apex:outputText value="{!op.Type}"/>
+                    </apex:column>
+                    
+                    <apex:column >
+                        <apex:facet name="header">Amount</apex:facet>
+                        <apex:outputText value="{!op.Amount}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Stage</apex:facet>
+                        <apex:outputText value="{!op.StageName}"/>
+                    </apex:column>
+                </apex:dataTable>
+            </apex:pageBlockSection>
+            
+       	</apex:pageBlock>
+   </apex:form>
+</apex:page>  
